@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 class SimpleCalculator{
-	public double ans;
+	public static double ans;
 }
 class Addition extends SimpleCalculator{
     double l;
