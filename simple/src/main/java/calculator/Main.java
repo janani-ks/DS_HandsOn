@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 class SimpleCalculator{
 	private static double ans;
-	void setter(double a) {
+	static void setter(double a) {
 		SimpleCalculator.ans = a;
 	}
 	double getter() {
