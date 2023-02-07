@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 class SimpleCalculator{
 	private static double ans;
 	void setter(double a) {
-		this.ans = a;
+		SimpleCalculator.ans = a;
 	}
 	double getter() {
 		return ans;
