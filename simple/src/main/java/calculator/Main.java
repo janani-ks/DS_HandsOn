@@ -1,7 +1,8 @@
 package calculator;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 class SimpleCalculator{
 	private static float ans;
 	static void setter(float a) {
@@ -37,9 +38,9 @@ class Division extends SimpleCalculator{
 }
 public class Main {
 	public static void main(String[] args) {
-		Logger l = Logger.getLogger("com.api.jar");
+		PrintStream p=new PrintStream((new FileOutputStream(FileDescriptor.out)));
 		Scanner c = new Scanner(System.in);
-		l.info("Enter the values and operations ");
+		p.println("Enter the values and operations ");
 		SimpleCalculator s = new SimpleCalculator();
 		char[] arr = new char[100];
 		int i=0;
@@ -76,6 +77,6 @@ public class Main {
 		}
 		j=j+2;
 		}
-		l.log(Level.INFO,()-> "The Answer is = "+s.getter());
+		p.println("The Answer is = "+s.getter());
 }
 }
