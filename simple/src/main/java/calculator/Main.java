@@ -2,81 +2,90 @@ package calculator;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
-class SimpleCalculator{
-	private static float ans;
-	static void setter(float a) {
-		SimpleCalculator.ans = a;
+import java.util.Stack;
+class Calculation{
+	static PrintStream p=new PrintStream((new FileOutputStream(FileDescriptor.out)));
+	float number;
+	char op;
+	Calculation(){
+		p.println("Enter the values and operations ");
 	}
-	double getter() {
-		return ans;
-	}
-}
-class Addition extends SimpleCalculator{
-	public float calculate(float a,float b) {
-		setter(a+b);
-		return a+b;
-	}
-}
-class Subraction extends SimpleCalculator{
-    public float calculate(float a,float b) {
-    	setter(a-b);
-    	return a-b;
-	}
-}
-class Multiplication extends SimpleCalculator{
-    public float calculate(float a,float b) {
-    	setter(a*b);
-    	return a*b;
-	}
-}
-class Division extends SimpleCalculator{
-    public float calculate(float a,float b) {
-    	setter(a/b);
-    	return a/b;
-	}
+    Calculation(float n,char o){
+    	this.number = n;
+    	this.op = o;
+    }
+    float calculate(float a,float b,char c){
+    	switch(c) {
+    	case '+':
+    		return a+b;
+    	case '-':
+    		return a-b;
+    	case '*':
+    		return a*b;
+    	case '/':
+    		return a/b;
+    	default:
+    		return 0;
+    	}
+    }
 }
 public class Main {
-	public static void main(String[] args) {
-		PrintStream p=new PrintStream((new FileOutputStream(FileDescriptor.out)));
-		Scanner c = new Scanner(System.in);
-		p.println("Enter the values and operations ");
-		SimpleCalculator s = new SimpleCalculator();
-		char[] arr = new char[100];
-		int i=0;
-		while(i>=0) {
-			char o = c.next().charAt(0);
-			arr[i]=o;
-			if(arr[i]=='='){
+	static char check(char a) {
+		if(a == '+' || a == '-')
+			return 1;
+		else
+			return 2;
+	}
+	public static void main(String[] arg) {
+		Calculation c = new Calculation();
+		Scanner s = new Scanner(System.in);
+		ArrayList<Calculation> arr = new ArrayList<Calculation>();
+		Stack<Float> s1= new Stack<>(); 
+		Stack<Character> s2 = new Stack<>(); 
+		while(1>0) {
+			float n = s.nextFloat();
+			char o = s.next().charAt(0);
+			arr.add(new Calculation(n,o));
+			if(o == '=')
 				break;
+		}
+		float ans = 0;
+		s1.add(arr.get(0).number);
+		for(int j=1;j<arr.size();j++) {
+			int i = j-1;
+			if(arr.get(i).op == '+' || arr.get(i).op == '-'|| arr.get(i).op == '/'|| arr.get(i).op == '*') {
+				if(s2.isEmpty()) {
+					s2.add(arr.get(i).op);
+					s1.add(arr.get(j).number);
+				}
+				else if(check(arr.get(i).op) <= check(s2.peek())) {
+					while(s2.isEmpty()!=true && check(arr.get(i).op) <= check(s2.peek())) {
+					float a = s1.peek();
+					s1.pop();
+					ans = c.calculate(s1.peek(),a,s2.peek());
+					s1.pop();
+					s2.pop();
+					s1.add(ans);
+					}
+					s2.add(arr.get(i).op);
+					s1.add(arr.get(j).number);
+				}
+				else {
+					s2.add(arr.get(i).op);
+					s1.add(arr.get(j).number);
+				}
 			}
-			i++;
 		}
-		float ans = Float.parseFloat(""+arr[0]);
-		int j=1;
-		while(j<i) {
-		switch(arr[j]){
-		case '+':
-			Addition a1 = new Addition();
-			ans = a1.calculate(ans,Float.parseFloat(""+arr[j+1]));
-			break;
-		case '-':
-			Subraction a2 = new Subraction();
-			ans = a2.calculate(ans,Float.parseFloat(""+arr[j+1]));
-			break;
-		case '*':
-			Multiplication a3 = new Multiplication();
-			ans = a3.calculate(ans,Float.parseFloat(""+arr[j+1]));
-			break;
-		case '/':
-			Division a4 = new Division();
-			ans = a4.calculate(ans,Float.parseFloat(""+arr[j+1]));
-			break;
-		default:
-			break;
+		while(s2.isEmpty()!=true) {
+			float a = s1.peek();
+			s1.pop();
+			ans = c.calculate(s1.peek(),a,s2.peek());
+			s1.pop();
+			s2.pop();
+			s1.add(ans);
 		}
-		j=j+2;
-		}
-		p.println("The Answer is = "+s.getter());
-}
+		c.p.println("The Total is = "+ans);
+	}
 }
