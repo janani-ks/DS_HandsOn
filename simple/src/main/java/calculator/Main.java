@@ -3,8 +3,8 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Stack;
 class Calculation{
 	static PrintStream p=new PrintStream((new FileOutputStream(FileDescriptor.out)));
 	float number;
@@ -32,8 +32,8 @@ class Calculation{
     }
 }
 public class Main {
-	static Stack<Float> s1= new Stack<Float>(); 
-	static Stack<Character> s2 = new Stack<Character>(); 
+	static LinkedList<Float> s1 = new LinkedList<Float>();; 
+	static LinkedList<Character> s2 = new LinkedList<Character>();; 
 	static boolean empty() {
 		boolean b = true;
 		if(s2.isEmpty()) 
@@ -62,25 +62,25 @@ public class Main {
 		for(int j=1;j<arr.size();j++) {
 			int i = j-1;
 			if(arr.get(i).op == '+' || arr.get(i).op == '-'|| arr.get(i).op == '/'|| arr.get(i).op == '*') {
-				while(empty() && check(arr.get(i).op) <= check(s2.peek())) {
-					float a = s1.peek();
-					s1.pop();
-					ans = c.calculate(s1.peek(),a,s2.peek());
-					s1.pop();
-					s2.pop();
-					s1.add(ans);
+				while(empty() && check(arr.get(i).op) <= check(s2.peekLast())) {
+					float a = s1.peekLast();
+					s1.removeLast();
+					ans = c.calculate(s1.peekLast(),a,s2.peekLast());
+					s1.removeLast();
+					s2.removeLast();
+					s1.addLast(ans);
 					}
-					s2.add(arr.get(i).op);
-					s1.add(arr.get(j).number);
+					s2.addLast(arr.get(i).op);
+					s1.addLast(arr.get(j).number);
 			}
 		}
 		while(empty()) {
-			float a = s1.peek();
-			s1.pop();
-			ans = c.calculate(s1.peek(),a,s2.peek());
-			s1.pop();
-			s2.pop();
-			s1.add(ans);
+			float a = s1.peekLast();
+			s1.removeLast();
+			ans = c.calculate(s1.peekLast(),a,s2.peekLast());
+			s1.removeLast();
+			s2.removeLast();
+			s1.addLast(ans);
 		}
 		Calculation.p.println("The Total is = "+ans);
 	}
