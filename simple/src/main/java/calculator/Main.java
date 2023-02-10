@@ -32,14 +32,12 @@ class Calculation{
     }
 }
 public class Main {
-	static Stack<Float> s1= new Stack<>(); 
-	static Stack<Character> s2 = new Stack<>(); 
+	static Stack<Float> s1= new Stack<Float>(); 
+	static Stack<Character> s2 = new Stack<Character>(); 
 	static boolean empty() {
-		if(s2.isEmpty()) {
+		if(s2.isEmpty()) 
 			return false;
-		}
-		else
-			return true;
+		return true;
 	}
 	static char check(char a) {
 		if(a == '+' || a == '-')
