@@ -35,9 +35,10 @@ public class Main {
 	static Stack<Float> s1= new Stack<Float>(); 
 	static Stack<Character> s2 = new Stack<Character>(); 
 	static boolean empty() {
+		boolean b = true;
 		if(s2.isEmpty()) 
-			return false;
-		return true;
+			b = false;
+		return b;
 	}
 	static char check(char a) {
 		if(a == '+' || a == '-')
