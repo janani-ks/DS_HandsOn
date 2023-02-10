@@ -32,8 +32,8 @@ class Calculation{
     }
 }
 public class Main {
-	static LinkedList<Float> s1 = new LinkedList<Float>();; 
-	static LinkedList<Character> s2 = new LinkedList<Character>();; 
+	static LinkedList<Float> s1 = new LinkedList<Float>();
+	static LinkedList<Character> s2 = new LinkedList<Character>();
 	static boolean empty() {
 		boolean b = true;
 		if(s2.isEmpty()) 
