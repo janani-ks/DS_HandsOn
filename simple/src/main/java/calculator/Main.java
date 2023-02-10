@@ -32,6 +32,15 @@ class Calculation{
     }
 }
 public class Main {
+	static Stack<Float> s1= new Stack<>(); 
+	static Stack<Character> s2 = new Stack<>(); 
+	static boolean empty() {
+		if(s2.isEmpty()) {
+			return false;
+		}
+		else
+			return true;
+	}
 	static char check(char a) {
 		if(a == '+' || a == '-')
 			return 1;
@@ -42,8 +51,6 @@ public class Main {
 		Calculation c = new Calculation();
 		Scanner s = new Scanner(System.in);
 		ArrayList<Calculation> arr = new ArrayList<Calculation>();
-		Stack<Float> s1= new Stack<>(); 
-		Stack<Character> s2 = new Stack<>(); 
 		while(1>0) {
 			float n = s.nextFloat();
 			char o = s.next().charAt(0);
@@ -56,12 +63,7 @@ public class Main {
 		for(int j=1;j<arr.size();j++) {
 			int i = j-1;
 			if(arr.get(i).op == '+' || arr.get(i).op == '-'|| arr.get(i).op == '/'|| arr.get(i).op == '*') {
-				if(s2.isEmpty()) {
-					s2.add(arr.get(i).op);
-					s1.add(arr.get(j).number);
-				}
-				else if(check(arr.get(i).op) <= check(s2.peek())) {
-					while(s2.isEmpty()!=true && check(arr.get(i).op) <= check(s2.peek())) {
+				while(empty() && check(arr.get(i).op) <= check(s2.peek())) {
 					float a = s1.peek();
 					s1.pop();
 					ans = c.calculate(s1.peek(),a,s2.peek());
@@ -71,14 +73,9 @@ public class Main {
 					}
 					s2.add(arr.get(i).op);
 					s1.add(arr.get(j).number);
-				}
-				else {
-					s2.add(arr.get(i).op);
-					s1.add(arr.get(j).number);
-				}
 			}
 		}
-		while(s2.isEmpty()!=true) {
+		while(empty()) {
 			float a = s1.peek();
 			s1.pop();
 			ans = c.calculate(s1.peek(),a,s2.peek());
@@ -86,6 +83,6 @@ public class Main {
 			s2.pop();
 			s1.add(ans);
 		}
-		c.p.println("The Total is = "+ans);
+		Calculation.p.println("The Total is = "+ans);
 	}
 }
