@@ -10,7 +10,7 @@ class Calculation{
 	float number;
 	char op;
 	Calculation(){
-		p.println("Enter the values and operations ");
+		p.println("Start Calculation !!");
 	}
     Calculation(float n,char o){
     	this.number = n;
