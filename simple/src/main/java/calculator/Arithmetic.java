@@ -60,15 +60,10 @@ public class Arithmetic {
 						arr.add(new Calculation(f,cal));
 					    break;
 					}
-					else {
-						continue;
-					}
 				}
 				if( cal == '=')
 				     break;
 			}
-			else 
-				continue;
 		}
 		valuelist.add(arr.get(0).number);
 		for(int j=1;j<arr.size();j++) {
